@@ -1,12 +1,12 @@
 {
   "name": "html-webpack-reload-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "reload your browser when your html changes, works with html-webpack-plugin",
   "main": "index.js",
   "repository": "https://github.com/L-Chris/html-webpack-reload-plugin",
   "author": "L-Chris <563303226@qq.com>",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "socket.io": "^2.1.1"
   }
 }
