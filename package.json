@@ -1,6 +1,6 @@
 {
   "name": "html-webpack-reload-plugin",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "reload your browser when your html changes, works with html-webpack-plugin",
   "main": "index.js",
   "repository": "https://github.com/L-Chris/html-webpack-reload-plugin",

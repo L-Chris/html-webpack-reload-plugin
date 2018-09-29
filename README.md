@@ -1,7 +1,8 @@
 # html-webpack-reload-plugin
 Automatically refresh your browser whenever you make changes to templates consumed by html-webpack-plugin.
 It should only be used in development.
-Supports webpack v1/2/3/4.
+v1 support webpack3
+v2 support webpack4
 Inspire by reload-html-webpack-plugin.
 
 ## Install
