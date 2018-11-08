@@ -1,24 +1,26 @@
-var io = require('socket.io')(8196)
-
-const socket = {
-  init (data) {
-    data.html += '<script src="http://localhost:8196/socket.io/socket.io.js"></script>'
-    data.html += '<script>var socket = io.connect("http://localhost:8196");socket.on("reload", function(){window.location.reload()});</script>'
-  },
-  reload () {
-    io.emit('reload')
-  }
-}
+const Socket = require('./components/socket')
 
 class HtmlWebpackReloadPlugin {
-  apply (compiler) {
-    compiler.hooks.compilation.tap('HtmlWebpackReload', function (compilation) {
-      compilation.hooks.htmlWebpackPluginBeforeHtmlProcessing.tapAsync('HtmlWebpackReload', function (data, callback) {
-        socket.init(data)
+  apply(compiler) {
+    compiler.hooks.compilation.tap('HtmlWebpackReload', function(compilation) {
+      // html-webpack-plugin v3
+      let beforeEmit = compilation.hooks.htmlWebpackPluginBeforeHtmlProcessing
+      let afterEmit = compilation.hooks.htmlWebpackPluginAfterEmit
+
+      if (!beforeEmit && !afterEmit) {
+        const HtmlWebpackPlugin = require('html-webpack-plugin')
+        beforeEmit = HtmlWebpackPlugin.getHooks(compilation)
+          .afterTemplateExecution
+        afterEmit = HtmlWebpackPlugin.getHooks(compilation).afterEmit
+      }
+
+      beforeEmit.tapAsync('HtmlWebpackReload', function(data, callback) {
+        Socket.init(data)
         callback(null, data)
       })
-      compilation.hooks.htmlWebpackPluginAfterEmit.tapAsync('HtmlWebpackReload', function (data, callback) {
-        socket.reload()
+
+      afterEmit.tapAsync('HtmlWebpackReload', function(data, callback) {
+        Socket.reload()
         callback(null, data)
       })
     })
